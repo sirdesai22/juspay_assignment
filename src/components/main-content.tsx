@@ -1,9 +1,9 @@
-import { motion } from "framer-motion"
-import StatCard from "./stat-card"
-import Chart from "./chart"
-import WorldMap from "./world-map"
-import ProductsTable from "./products-table"
-import SalesChart from "./sales-chart"
+import { motion } from "framer-motion";
+import StatCard from "./stat-card";
+import Chart from "./chart";
+import WorldMap from "./world-map";
+import ProductsTable from "./products-table";
+import SalesChart from "./sales-chart";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -14,7 +14,7 @@ const containerVariants = {
       delayChildren: 0.2,
     },
   },
-}
+};
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -23,7 +23,7 @@ const itemVariants = {
     y: 0,
     transition: { duration: 0.5 },
   },
-}
+};
 
 export default function MainContent() {
   return (
@@ -40,11 +40,29 @@ export default function MainContent() {
         </motion.div>
 
         {/* Stat Cards and Bar Chart */}
-        <motion.div variants={itemVariants} className="flex gap-6 flex-col lg:flex-row w-full">
+        <motion.div
+          variants={itemVariants}
+          className="flex gap-6 flex-col lg:flex-row w-full"
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto lg:flex-1">
-            <StatCard title="Customers" value="3,781" change="+11.01%" trend="up" />
-            <StatCard title="Orders" value="1,219" change="-0.03%" trend="down" />
-            <StatCard title="Revenue" value="$695" change="+15.03%" trend="up" />
+            <StatCard
+              title="Customers"
+              value="3,781"
+              change="+11.01%"
+              trend="up"
+            />
+            <StatCard
+              title="Orders"
+              value="1,219"
+              change="-0.03%"
+              trend="down"
+            />
+            <StatCard
+              title="Revenue"
+              value="$695"
+              change="+15.03%"
+              trend="up"
+            />
             <StatCard title="Growth" value="30.1%" change="+6.08%" trend="up" />
           </div>
           <div className="w-full lg:flex-[2] lg:min-w-0">
@@ -53,20 +71,62 @@ export default function MainContent() {
         </motion.div>
 
         {/* Revenue Chart and World Map */}
-        <motion.div variants={itemVariants} className="flex gap-6 flex-col lg:flex-row">
+        <motion.div
+          variants={itemVariants}
+          className="flex gap-6 flex-col lg:flex-row"
+        >
           <div className="flex-1 lg:flex-[2] min-w-0">
-            <div className="bg-card rounded-lg border border-border p-6">
-              <h3 className="text-lg font-semibold mb-4">Revenue</h3>
-              <SalesChart />
+            <div className="bg-card rounded-lg border border-border p-6 h-full flex flex-col">
+              <div className="flex items-center mb-4">
+                <h3 className="text-lg font-semibold">Revenue</h3>
+                <div className="h-6 w-px bg-border mx-4"></div>
+                {/* Stats beside title */}
+                <div className="flex items-center gap-5 ml-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-black rounded-full"></div>
+                    <div className="flex gap-2">
+                      <p className="text-sm text-muted-foreground">
+                        Current Week
+                      </p>
+                      <p className="text-sm font-semibold text-black">
+                        $58,211
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-[oklch(0.7_0.14_250)] rounded-full"></div>
+                    <div className="flex gap-2">
+                      <p className="text-sm text-muted-foreground">
+                        Previous Week
+                      </p>
+                      <p className="text-sm font-semibold text-black">
+                        $68,768
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex-1 min-h-[300px]">
+                <SalesChart
+                  currentWeekValue="$58,211"
+                  previousWeekValue="$68,768"
+                />
+              </div>
             </div>
           </div>
           <div className="flex-1 min-w-0">
-            <WorldMap />
+            <div className="h-full">
+              <WorldMap />
+            </div>
           </div>
         </motion.div>
 
         {/* Products and Sales */}
-        <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <motion.div
+          variants={itemVariants}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+        >
           <div className="lg:col-span-2">
             <ProductsTable />
           </div>
@@ -78,7 +138,12 @@ export default function MainContent() {
             >
               <h3 className="text-lg font-semibold mb-4">Total Sales</h3>
               <div className="relative flex items-center justify-center h-64">
-                <svg width="200" height="200" viewBox="0 0 200 200" className="transform -rotate-90">
+                <svg
+                  width="200"
+                  height="200"
+                  viewBox="0 0 200 200"
+                  className="transform -rotate-90"
+                >
                   {/* Donut Chart */}
                   <circle
                     cx="100"
@@ -160,5 +225,5 @@ export default function MainContent() {
         </motion.div>
       </div>
     </motion.main>
-  )
+  );
 }
