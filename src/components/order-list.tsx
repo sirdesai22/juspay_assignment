@@ -19,7 +19,7 @@ const orders = [
     project: "Landing Page",
     address: "Meadow Lane Oakland",
     date: "Just now",
-    status: { label: "In Progress", color: "bg-blue-500" },
+    status: { label: "In Progress", color: "bg-blue-200", textColor: "text-blue-700" },
   },
   {
     id: "CM9802",
@@ -27,7 +27,7 @@ const orders = [
     project: "CRM Admin pages",
     address: "Larry San Francisco",
     date: "A minute ago",
-    status: { label: "Complete", color: "bg-green-500" },
+    status: { label: "Complete", color: "bg-green-200", textColor: "text-green-700" },
   },
   {
     id: "CM9803",
@@ -35,7 +35,7 @@ const orders = [
     project: "Client Project",
     address: "Bagwell Avenue Ocala",
     date: "1 hour ago",
-    status: { label: "Pending", color: "bg-sky-500" },
+    status: { label: "Pending", color: "bg-sky-200", textColor: "text-sky-700" },
   },
   {
     id: "CM9804",
@@ -43,7 +43,7 @@ const orders = [
     project: "Admin Dashboard",
     address: "Washburn Baton Rouge",
     date: "Yesterday",
-    status: { label: "Approved", color: "bg-orange-500" },
+    status: { label: "Approved", color: "bg-orange-200", textColor: "text-orange-700" },
   },
   {
     id: "CM9805",
@@ -51,7 +51,7 @@ const orders = [
     project: "App Landing Page",
     address: "Nest Lane Olivette",
     date: "Feb 2, 2023",
-    status: { label: "Rejected", color: "bg-gray-500" },
+    status: { label: "Rejected", color: "bg-gray-200", textColor: "text-gray-700" },
     hasDocument: true,
   },
   {
@@ -60,7 +60,7 @@ const orders = [
     project: "Landing Page",
     address: "Meadow Lane Oakland",
     date: "Just now",
-    status: { label: "In Progress", color: "bg-blue-500" },
+    status: { label: "In Progress", color: "bg-blue-200", textColor: "text-blue-700" },
   },
   {
     id: "CM9802",
@@ -68,7 +68,7 @@ const orders = [
     project: "CRM Admin pages",
     address: "Larry San Francisco",
     date: "A minute ago",
-    status: { label: "Complete", color: "bg-green-500" },
+    status: { label: "Complete", color: "bg-green-200", textColor: "text-green-700" },
   },
   {
     id: "CM9803",
@@ -76,7 +76,7 @@ const orders = [
     project: "Client Project",
     address: "Bagwell Avenue Ocala",
     date: "1 hour ago",
-    status: { label: "Pending", color: "bg-sky-500" },
+    status: { label: "Pending", color: "bg-sky-200", textColor: "text-sky-700" },
   },
   {
     id: "CM9804",
@@ -84,7 +84,7 @@ const orders = [
     project: "Admin Dashboard",
     address: "Washburn Baton Rouge",
     date: "Yesterday",
-    status: { label: "Approved", color: "bg-orange-500" },
+    status: { label: "Approved", color: "bg-orange-200", textColor: "text-orange-700" },
   },
   {
     id: "CM9805",
@@ -92,7 +92,7 @@ const orders = [
     project: "App Landing Page",
     address: "Nest Lane Olivette",
     date: "Feb 2, 2023",
-    status: { label: "Rejected", color: "bg-gray-500" },
+    status: { label: "Rejected", color: "bg-gray-200", textColor: "text-gray-700" },
   },
 ]
 
@@ -224,7 +224,7 @@ export default function OrderList() {
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
                         <div className={`w-2 h-2 rounded-full ${order.status.color}`}></div>
-                        <span className="text-sm text-foreground">{order.status.label}</span>
+                        <span className={`text-sm ${order.status.textColor}`}>{order.status.label}</span>
                         {order.status.label === "Rejected" && i === 4 && (
                           <button className="ml-auto p-1 hover:bg-muted rounded">
                             <MoreVertical className="w-4 h-4 text-muted-foreground" />
