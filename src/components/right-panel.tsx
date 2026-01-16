@@ -1,10 +1,11 @@
 import { motion } from "framer-motion"
+import { Bug, UserPlus, Mic } from "lucide-react"
 
 const notifications = [
-  { id: 1, icon: "🐛", title: "You have a bug that needs...", time: "Just now" },
-  { id: 2, icon: "👤", title: "New user registered", time: "59 minutes ago" },
-  { id: 3, icon: "🐛", title: "You have a bug that needs...", time: "12 hours ago" },
-  { id: 4, icon: "🎙️", title: "Andi Lane subscribed to you", time: "Today, 11:59 AM" },
+  { id: 1, icon: Bug, title: "You have a bug that needs...", time: "Just now" },
+  { id: 2, icon: UserPlus, title: "New user registered", time: "59 minutes ago" },
+  { id: 3, icon: Bug, title: "You have a bug that needs...", time: "12 hours ago" },
+  { id: 4, icon: Mic, title: "Andi Lane subscribed to you", time: "Today, 11:59 AM" },
 ]
 
 const activities = [
@@ -58,24 +59,29 @@ export default function RightPanel({ onClose: _onClose }: RightPanelProps) {
         <div className="p-4">
           <h3 className="text-sm font-semibold text-foreground mb-3">Notifications</h3>
           <div className="space-y-1">
-            {notifications.map((notif, i) => (
-              <motion.div
-                key={notif.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ backgroundColor: "hsl(var(--color-muted) / 0.5)" }}
-                className="p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
-              >
-                <div className="flex gap-3">
-                  <div className="text-xl shrink-0">{notif.icon}</div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{notif.title}</p>
-                    <p className="text-xs text-muted-foreground">{notif.time}</p>
+            {notifications.map((notif, i) => {
+              const IconComponent = notif.icon
+              return (
+                <motion.div
+                  key={notif.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ backgroundColor: "hsl(var(--color-muted) / 0.5)" }}
+                  className="p-3 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                >
+                  <div className="flex gap-3 items-center">
+                    <div className="shrink-0 p-2 bg-muted rounded-full">
+                      <IconComponent className="w-5 h-5 text-muted-foreground" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">{notif.title}</p>
+                      <p className="text-xs text-muted-foreground">{notif.time}</p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              )
+            })}
           </div>
         </div>
 

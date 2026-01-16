@@ -5,6 +5,8 @@ import { useState } from "react"
 interface SidebarProps {
   open: boolean
   onToggle: () => void
+  onNavigate?: (view: "default" | "ecommerce") => void
+  activeView?: "default" | "ecommerce"
 }
 
 const navigationItems = [
@@ -13,10 +15,10 @@ const navigationItems = [
 ]
 
 const dashboardItems = [
-  { icon: Home, label: "Default", active: true },
-  { icon: BookOpen, label: "eCommerce" },
-  { icon: FolderOpen, label: "Projects" },
-  { icon: BookOpen, label: "Online Courses" },
+  { icon: Home, label: "Default", id: "default" as const },
+  { icon: BookOpen, label: "eCommerce", id: "ecommerce" as const },
+  { icon: FolderOpen, label: "Projects", id: "default" as const },
+  { icon: BookOpen, label: "Online Courses", id: "default" as const },
 ]
 
 const userProfileItems = [
@@ -34,7 +36,7 @@ const pageItems = [
   { icon: Home, label: "Social" },
 ]
 
-export default function Sidebar({ open }: SidebarProps) {
+export default function Sidebar({ open, onNavigate, activeView = "default" }: SidebarProps) {
   const [expandedFavories, setExpandedFavories] = useState(true)
   const [expandedUserProfile, setExpandedUserProfile] = useState(false)
 
@@ -93,24 +95,27 @@ export default function Sidebar({ open }: SidebarProps) {
               Dashboards
             </div>
             <motion.div className="space-y-1">
-              {dashboardItems.map((item, i) => (
-                <motion.a
-                  key={i}
-                  href="#"
-                  whileHover={{ x: 4 }}
-                  className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${
-                    item.active
-                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                      : "text-sidebar-foreground hover:bg-sidebar-accent/50"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <item.icon className="w-4 h-4" />
-                    <span>{item.label}</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 opacity-60" />
-                </motion.a>
-              ))}
+              {dashboardItems.map((item, i) => {
+                const isActive = activeView === item.id
+                return (
+                  <motion.button
+                    key={i}
+                    onClick={() => onNavigate?.(item.id)}
+                    whileHover={{ x: 4 }}
+                    className={`flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm transition-colors ${
+                      isActive
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                        : "text-sidebar-foreground hover:bg-sidebar-accent/50"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <item.icon className="w-4 h-4" />
+                      <span>{item.label}</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 opacity-60" />
+                  </motion.button>
+                )
+              })}
             </motion.div>
           </div>
 
