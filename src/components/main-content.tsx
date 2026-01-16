@@ -39,29 +39,29 @@ export default function MainContent() {
           <h1 className="text-2xl font-bold">eCommerce</h1>
         </motion.div>
 
-        {/* Stat Cards */}
-        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard title="Customers" value="3,781" change="+11.01%" trend="up" />
-          <StatCard title="Orders" value="1,219" change="-0.03%" trend="down" />
-          <StatCard title="Revenue" value="$695" change="+15.03%" trend="up" />
-          <StatCard title="Growth" value="30.1%" change="+6.08%" trend="up" />
-        </motion.div>
-
-        {/* Charts Grid */}
-        <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
+        {/* Stat Cards and Bar Chart */}
+        <motion.div variants={itemVariants} className="flex gap-6 flex-col lg:flex-row w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto lg:flex-1">
+            <StatCard title="Customers" value="3,781" change="+11.01%" trend="up" />
+            <StatCard title="Orders" value="1,219" change="-0.03%" trend="down" />
+            <StatCard title="Revenue" value="$695" change="+15.03%" trend="up" />
+            <StatCard title="Growth" value="30.1%" change="+6.08%" trend="up" />
+          </div>
+          <div className="w-full lg:flex-[2] lg:min-w-0">
             <Chart />
           </div>
-          <div>
-            <WorldMap />
-          </div>
         </motion.div>
 
-        {/* Revenue Chart */}
-        <motion.div variants={itemVariants}>
-          <div className="bg-card rounded-lg border border-border p-6">
-            <h3 className="text-lg font-semibold mb-4">Revenue</h3>
-            <SalesChart />
+        {/* Revenue Chart and World Map */}
+        <motion.div variants={itemVariants} className="flex gap-6 flex-col lg:flex-row">
+          <div className="flex-1 lg:flex-[2] min-w-0">
+            <div className="bg-card rounded-lg border border-border p-6">
+              <h3 className="text-lg font-semibold mb-4">Revenue</h3>
+              <SalesChart />
+            </div>
+          </div>
+          <div className="flex-1 min-w-0">
+            <WorldMap />
           </div>
         </motion.div>
 
@@ -77,7 +77,7 @@ export default function MainContent() {
               className="bg-card rounded-lg border border-border p-6"
             >
               <h3 className="text-lg font-semibold mb-4">Total Sales</h3>
-              <div className="flex items-center justify-center h-64">
+              <div className="relative flex items-center justify-center h-64">
                 <svg width="200" height="200" viewBox="0 0 200 200" className="transform -rotate-90">
                   {/* Donut Chart */}
                   <circle
@@ -120,7 +120,7 @@ export default function MainContent() {
                     strokeDashoffset="-255"
                   />
                 </svg>
-                <div className="absolute text-center">
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                   <div className="text-2xl font-bold">38.6%</div>
                   <div className="text-xs text-muted-foreground">Direct</div>
                 </div>
@@ -128,28 +128,28 @@ export default function MainContent() {
               <div className="mt-4 space-y-2 text-sm">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "hsl(var(--color-chart-1))" }} />
+                    <div className="w-3 h-3 rounded-full bg-chart-1" />
                     <span>Direct</span>
                   </div>
                   <span className="font-semibold">$300.56</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "hsl(var(--color-chart-2))" }} />
+                    <div className="w-3 h-3 rounded-full bg-chart-2" />
                     <span>Affiliate</span>
                   </div>
                   <span className="font-semibold">$135.18</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "hsl(var(--color-chart-4))" }} />
+                    <div className="w-3 h-3 rounded-full bg-chart-4" />
                     <span>Sponsored</span>
                   </div>
                   <span className="font-semibold">$154.02</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "hsl(var(--color-chart-6))" }} />
+                    <div className="w-3 h-3 rounded-full bg-chart-6" />
                     <span>E-mail</span>
                   </div>
                   <span className="font-semibold">$48.96</span>

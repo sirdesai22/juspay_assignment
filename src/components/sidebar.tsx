@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { ChevronDown, Home, FolderOpen, BookOpen, Users, Settings } from "lucide-react"
+import { ChevronDown, ChevronRight, Home, FolderOpen, BookOpen, Users, Settings } from "lucide-react"
 import { useState } from "react"
 
 interface SidebarProps {
@@ -95,14 +95,17 @@ export default function Sidebar({ open }: SidebarProps) {
                   key={i}
                   href="#"
                   whileHover={{ x: 4 }}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                  className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${
                     item.active
                       ? "bg-sidebar-accent text-sidebar-accent-foreground"
                       : "text-sidebar-foreground hover:bg-sidebar-accent/50"
                   }`}
                 >
-                  <item.icon className="w-4 h-4" />
-                  <span>{item.label}</span>
+                  <div className="flex items-center gap-3">
+                    <item.icon className="w-4 h-4" />
+                    <span>{item.label}</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 opacity-60" />
                 </motion.a>
               ))}
             </motion.div>
@@ -119,10 +122,13 @@ export default function Sidebar({ open }: SidebarProps) {
                   key={i}
                   href="#"
                   whileHover={{ x: 4 }}
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
+                  className="flex items-center justify-between px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
                 >
-                  <item.icon className="w-4 h-4" />
-                  <span>{item.label}</span>
+                  <div className="flex items-center gap-3">
+                    <item.icon className="w-4 h-4" />
+                    <span>{item.label}</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 opacity-60" />
                 </motion.a>
               ))}
             </motion.div>
@@ -136,10 +142,13 @@ export default function Sidebar({ open }: SidebarProps) {
               key={i}
               href="#"
               whileHover={{ x: 4 }}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
+              className="flex items-center justify-between px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
             >
-              <item.icon className="w-4 h-4" />
-              <span>{item.label}</span>
+              <div className="flex items-center gap-3">
+                <item.icon className="w-4 h-4" />
+                <span>{item.label}</span>
+              </div>
+              <ChevronRight className="w-4 h-4 opacity-60" />
             </motion.a>
           ))}
         </div>

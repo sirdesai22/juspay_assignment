@@ -1,21 +1,39 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from "recharts"
 
 const data = [
-  { month: "Jan", currentWeek: 15000, previousWeek: 12000 },
-  { month: "Feb", currentWeek: 18000, previousWeek: 14000 },
-  { month: "Mar", currentWeek: 16000, previousWeek: 15000 },
-  { month: "Apr", currentWeek: 22000, previousWeek: 18000 },
-  { month: "May", currentWeek: 19000, previousWeek: 17000 },
-  { month: "Jun", currentWeek: 25000, previousWeek: 21000 },
+  { month: "Jan", currentWeek: 12, previousWeek: 8 },
+  { month: "Feb", currentWeek: 8, previousWeek: 16 },
+  { month: "Mar", currentWeek: 9, previousWeek: 14 },
+  { month: "Apr", currentWeek: 15, previousWeek: 10 },
+  { month: "May", currentWeek: 19, previousWeek: 15 },
+  { month: "Jun", currentWeek: 20, previousWeek: 22 },
 ]
+
+// Full data for the chart
+const fullData = data
+
+const formatYAxis = (value: number) => {
+  return `${value}M`
+}
 
 export default function SalesChart() {
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data}>
+      <AreaChart data={fullData}>
+        <defs>
+          <linearGradient id="colorPreviousWeek" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="oklch(0.7 0.14 250)" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="oklch(0.7 0.14 250)" stopOpacity={0}/>
+          </linearGradient>
+        </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--color-border))" />
         <XAxis dataKey="month" stroke="hsl(var(--color-muted-foreground))" />
-        <YAxis stroke="hsl(var(--color-muted-foreground))" />
+        <YAxis 
+          stroke="hsl(var(--color-muted-foreground))" 
+          domain={[0, 30]}
+          tickFormatter={formatYAxis}
+          ticks={[0, 10, 20, 30]}
+        />
         <Tooltip
           contentStyle={{
             backgroundColor: "hsl(var(--color-card))",
@@ -24,24 +42,40 @@ export default function SalesChart() {
           }}
         />
         <Legend />
-        <Line
-          type="monotone"
-          dataKey="currentWeek"
-          stroke="hsl(var(--color-chart-1))"
-          strokeWidth={2}
-          dot={false}
-          name="Current Week $58,211"
-        />
-        <Line
+        <Area
           type="monotone"
           dataKey="previousWeek"
-          stroke="hsl(var(--color-chart-2))"
+          stroke="oklch(0.7 0.14 250)"
           strokeWidth={2}
-          strokeDasharray="5 5"
+          fill="url(#colorPreviousWeek)"
           dot={false}
           name="Previous Week $68,768"
         />
-      </LineChart>
+        {/* Solid line for Jan-Mar */}
+        <Line
+          type="monotone"
+          dataKey="currentWeek"
+          stroke="#000000"
+          strokeWidth={2}
+          dot={false}
+          strokeDasharray="0 0"
+          data={fullData.slice(0, 3)}
+          name="Current Week $58,211"
+          connectNulls={true}
+        />
+        {/* Dashed line for Apr-Jun, starting from Mar to connect */}
+        <Line
+          type="monotone"
+          dataKey="currentWeek"
+          stroke="#000000"
+          strokeWidth={2}
+          dot={false}
+          strokeDasharray="5 5"
+          data={fullData.slice(2)}
+          legendType="none"
+          connectNulls={true}
+        />
+      </AreaChart>
     </ResponsiveContainer>
   )
 }

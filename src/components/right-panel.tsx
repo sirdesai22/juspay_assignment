@@ -26,7 +26,11 @@ const contacts = [
   { id: 6, name: "Koray Okumus", avatar: "👨" },
 ]
 
-export default function RightPanel() {
+interface RightPanelProps {
+  onClose?: () => void
+}
+
+export default function RightPanel({ onClose }: RightPanelProps) {
   const [activeTab, setActiveTab] = useState<"notifications" | "activities" | "contacts">("notifications")
 
   return (
@@ -44,6 +48,7 @@ export default function RightPanel() {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            onClick={onClose}
             className="p-1 hover:bg-muted rounded transition-colors"
           >
             <X className="w-5 h-5" />

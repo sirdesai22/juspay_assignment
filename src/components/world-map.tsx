@@ -1,13 +1,29 @@
 import { motion } from "framer-motion"
+import { Map, MapTileLayer, MapMarker } from "@/components/ui/map"
+import L from "leaflet"
+
+// Custom dark grey marker icon
+const createCustomIcon = () => {
+  return L.divIcon({
+    className: "custom-marker",
+    html: `<div style="width: 6px; height: 6px; background-color: #666; border-radius: 50%;"></div>`,
+    iconSize: [6, 6],
+    iconAnchor: [3, 3],
+  })
+}
 
 const locations = [
-  { name: "New York", value: "72k", top: "45%", left: "25%" },
-  { name: "San Francisco", value: "39k", top: "35%", left: "15%" },
-  { name: "Sydney", value: "25k", top: "75%", left: "65%" },
-  { name: "Singapore", value: "61k", top: "65%", left: "55%" },
+  { name: "New York", value: 72, coordinates: [40.7128, -74.006] as [number, number] },
+  { name: "San Francisco", value: 39, coordinates: [37.7749, -122.4194] as [number, number] },
+  { name: "Sydney", value: 25, coordinates: [-33.8688, 151.2093] as [number, number] },
+  { name: "Singapore", value: 61, coordinates: [1.3521, 103.8198] as [number, number] },
 ]
 
+const maxValue = Math.max(...locations.map(l => l.value))
+
 export default function WorldMap() {
+  const customIcon = createCustomIcon()
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -15,56 +31,38 @@ export default function WorldMap() {
       className="bg-card border border-border rounded-lg p-6"
     >
       <h3 className="text-lg font-semibold mb-4">Revenue by Location</h3>
-      <div className="relative w-full h-64 bg-muted rounded-lg overflow-hidden">
-        {/* Simplified world map SVG */}
-        <svg viewBox="0 0 960 600" className="w-full h-full opacity-20" preserveAspectRatio="xMidYMid slice">
-          <path
-            d="M200,100 Q300,50 400,100 T600,100 Q700,150 750,200 L700,300 Q600,350 500,300 T300,350 Q200,300 150,250 Z"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
+      <div className="relative w-full h-48 bg-[oklch(0.95_0.02_250)] rounded-lg overflow-hidden mb-4">
+        <Map center={[20, 0]} zoom={2} className="h-full">
+          <MapTileLayer 
+            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           />
-        </svg>
-
-        {/* Location dots */}
-        {locations.map((location, i) => (
-          <motion.div
-            key={i}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: i * 0.1 }}
-            className="absolute"
-            style={{ top: location.top, left: location.left, transform: "translate(-50%, -50%)" }}
-          >
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-              className="w-3 h-3 bg-chart-1 rounded-full"
-            />
-          </motion.div>
-        ))}
-
-        {/* Location labels */}
-        <div className="absolute inset-0 pointer-events-none">
           {locations.map((location, i) => (
-            <motion.div
-              key={`label-${i}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: i * 0.1 + 0.3 }}
-              className="absolute text-xs font-semibold text-foreground"
-              style={{
-                top: `calc(${location.top} + 20px)`,
-                left: location.left,
-                transform: "translateX(-50%)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <div>{location.name}</div>
-              <div className="text-muted-foreground">{location.value}</div>
-            </motion.div>
+            <MapMarker key={i} position={location.coordinates} icon={customIcon} />
           ))}
-        </div>
+        </Map>
+      </div>
+
+      {/* Location list with horizontal bars */}
+      <div className="space-y-3">
+        {locations.map((location, i) => (
+          <div key={i} className="flex items-center justify-between">
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm font-medium text-foreground">{location.name}</span>
+                <span className="text-sm font-semibold text-foreground">{location.value}K</span>
+              </div>
+              <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(location.value / maxValue) * 100}%` }}
+                  transition={{ duration: 0.8, delay: i * 0.1 }}
+                  className="h-full bg-[oklch(0.62_0.18_250)] rounded-full"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </motion.div>
   )

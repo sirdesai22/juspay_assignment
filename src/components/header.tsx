@@ -1,4 +1,4 @@
-import { Bell, Moon, Sun, RotateCcw, Book, Grid2X2 } from "lucide-react"
+import { Bell, Moon, Sun, RotateCcw, Book, Grid2X2, Search } from "lucide-react"
 import { motion } from "framer-motion"
 
 interface HeaderProps {
@@ -23,11 +23,14 @@ export default function Header({ onNotificationClick, onThemeToggle, theme }: He
         </div>
       </div>
 
-      <input
-        type="text"
-        placeholder="Search"
-        className="hidden md:block flex-1 max-w-xs px-4 py-2 rounded-lg bg-muted border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring mx-4"
-      />
+      <div className="hidden md:flex flex-1 max-w-xs mx-4 relative items-center">
+        <Search className="absolute left-3 w-4 h-4 text-muted-foreground" />
+        <input
+          type="text"
+          placeholder="Search"
+          className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+        />
+      </div>
 
       <div className="flex items-center gap-3">
         <motion.button

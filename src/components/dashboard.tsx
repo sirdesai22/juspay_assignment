@@ -30,7 +30,7 @@ export default function Dashboard() {
           <MainContent />
 
           {/* Right panel */}
-          {notificationsOpen && <RightPanel />}
+          {notificationsOpen && <RightPanel onClose={() => setNotificationsOpen(false)} />}
         </div>
       </div>
     </div>

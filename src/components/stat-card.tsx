@@ -12,12 +12,12 @@ export default function StatCard({ title, value, change, trend }: StatCardProps)
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className="bg-card border border-border rounded-lg p-6 backdrop-blur-sm hover:shadow-lg transition-shadow"
+      className="bg-card border border-border rounded-lg p-5 backdrop-blur-sm hover:shadow-lg transition-shadow w-full"
     >
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
         <p className="text-sm font-medium text-muted-foreground mb-2">{title}</p>
         <div className="flex items-end justify-between">
-          <h3 className="text-3xl font-bold">{value}</h3>
+          <h3 className="text-3xl font-bold text-foreground">{value}</h3>
           <motion.div
             animate={{ y: trend === "up" ? -4 : 4 }}
             className={`flex items-center gap-1 ${trend === "up" ? "text-chart-1" : "text-destructive"}`}

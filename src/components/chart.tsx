@@ -2,13 +2,17 @@ import { motion } from "framer-motion"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
 
 const data = [
-  { month: "Jan", value: 12 },
-  { month: "Feb", value: 15 },
-  { month: "Mar", value: 14 },
-  { month: "Apr", value: 18 },
-  { month: "May", value: 13 },
-  { month: "Jun", value: 20 },
+  { month: "Jan", actuals: 15, projections: 5 },
+  { month: "Feb", actuals: 19, projections: 5 },
+  { month: "Mar", actuals: 17, projections: 4 },
+  { month: "Apr", actuals: 21, projections: 6 },
+  { month: "May", actuals: 14, projections: 4 },
+  { month: "Jun", actuals: 17, projections: 7 },
 ]
+
+const formatYAxis = (value: number) => {
+  return `${value}M`
+}
 
 export default function Chart() {
   return (
@@ -19,10 +23,15 @@ export default function Chart() {
     >
       <h3 className="text-lg font-semibold mb-4">Projections vs Actuals</h3>
       <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={data}>
+        <BarChart data={data} barCategoryGap="25%">
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--color-border))" />
           <XAxis dataKey="month" stroke="hsl(var(--color-muted-foreground))" />
-          <YAxis stroke="hsl(var(--color-muted-foreground))" />
+          <YAxis 
+            stroke="hsl(var(--color-muted-foreground))" 
+            domain={[0, 30]}
+            tickFormatter={formatYAxis}
+            ticks={[0, 10, 20, 30]}
+          />
           <Tooltip
             contentStyle={{
               backgroundColor: "hsl(var(--color-card))",
@@ -30,7 +39,20 @@ export default function Chart() {
               borderRadius: "0.5rem",
             }}
           />
-          <Bar dataKey="value" fill="hsl(var(--color-chart-2))" radius={[8, 8, 0, 0]} />
+          <Bar 
+            dataKey="actuals" 
+            stackId="a"
+            fill="oklch(0.55 0.18 250)" 
+            radius={[0, 0, 0, 0]}
+            barSize={30}
+          />
+          <Bar 
+            dataKey="projections" 
+            stackId="a"
+            fill="oklch(0.7 0.14 250)" 
+            radius={[8, 8, 0, 0]}
+            barSize={30}
+          />
         </BarChart>
       </ResponsiveContainer>
     </motion.div>
