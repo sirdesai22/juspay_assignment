@@ -15,10 +15,10 @@ const navigationItems = [
 ]
 
 const dashboardItems = [
-  { icon: Home, label: "Default", id: "default" as const },
-  { icon: BookOpen, label: "eCommerce", id: "ecommerce" as const },
-  { icon: FolderOpen, label: "Projects", id: "default" as const },
-  { icon: BookOpen, label: "Online Courses", id: "default" as const },
+  { icon: Home, label: "Default", id: "default" as const, shouldHighlight: true },
+  { icon: BookOpen, label: "eCommerce", id: "ecommerce" as const, shouldHighlight: true },
+  { icon: FolderOpen, label: "Projects", id: "default" as const, shouldHighlight: false },
+  { icon: BookOpen, label: "Online Courses", id: "default" as const, shouldHighlight: false },
 ]
 
 const userProfileItems = [
@@ -96,7 +96,7 @@ export default function Sidebar({ open, onNavigate, activeView = "default" }: Si
             </div>
             <motion.div className="space-y-1">
               {dashboardItems.map((item, i) => {
-                const isActive = activeView === item.id
+                const isActive = item.shouldHighlight && activeView === item.id
                 return (
                   <motion.button
                     key={i}
@@ -129,6 +129,7 @@ export default function Sidebar({ open, onNavigate, activeView = "default" }: Si
               <div>
                 <motion.button
                   onClick={() => setExpandedUserProfile(!expandedUserProfile)}
+                  whileHover={{ x: 4 }}
                   className="flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">

@@ -50,20 +50,29 @@ export default function MainContent() {
               value="3,781"
               change="+11.01%"
               trend="up"
+              color="#e3f5ff"
             />
             <StatCard
               title="Orders"
               value="1,219"
               change="-0.03%"
               trend="down"
+              color="#f7f9fb"
             />
             <StatCard
               title="Revenue"
               value="$695"
               change="+15.03%"
               trend="up"
+              color="#f7f9fb"
             />
-            <StatCard title="Growth" value="30.1%" change="+6.08%" trend="up" />
+            <StatCard
+              title="Growth"
+              value="30.1%"
+              change="+6.08%"
+              trend="up"
+              color="#e5ecf6"
+            />
           </div>
           <div className="w-full lg:flex-[2] lg:min-w-0">
             <Chart />

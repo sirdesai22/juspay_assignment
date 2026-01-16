@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { color, motion } from "framer-motion"
 import { TrendingUp, TrendingDown } from "lucide-react"
 
 interface StatCardProps {
@@ -8,12 +8,11 @@ interface StatCardProps {
   trend: "up" | "down"
 }
 
-export default function StatCard({ title, value, change, trend }: StatCardProps) {
+export default function StatCard({ title, value, change, trend, color }: StatCardProps) {
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className="bg-card border border-border rounded-lg p-5 backdrop-blur-sm hover:shadow-lg transition-shadow w-full"
-    >
+      className={`bg-card rounded-lg p-5 backdrop-blur-sm hover:shadow-lg shadow-sm transition-shadow w-full`} style={{ backgroundColor: color }}>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
         <p className="text-sm font-medium text-muted-foreground mb-2">{title}</p>
         <div className="flex items-end justify-between">
