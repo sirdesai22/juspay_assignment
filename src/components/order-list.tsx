@@ -10,7 +10,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "./ui/pagination"
-import { useState } from "react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
+import { useState, useMemo } from "react"
+
+type SortField = "id" | "user" | "project" | "date" | "status" | null
+type SortOrder = "asc" | "desc"
 
 const orders = [
   {
@@ -98,12 +107,84 @@ const orders = [
 
 export default function OrderList() {
   const [selectedOrders, setSelectedOrders] = useState<string[]>([])
+  const [searchQuery, setSearchQuery] = useState("")
+  const [statusFilter, setStatusFilter] = useState<string | null>(null)
+  const [sortBy, setSortBy] = useState<SortField>(null)
+  const [sortOrder, setSortOrder] = useState<SortOrder>("asc")
 
   const toggleOrderSelection = (orderId: string) => {
     setSelectedOrders((prev) =>
       prev.includes(orderId) ? prev.filter((id) => id !== orderId) : [...prev, orderId]
     )
   }
+
+  const handleSort = (field: SortField) => {
+    if (sortBy === field) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+    } else {
+      setSortBy(field)
+      setSortOrder("asc")
+    }
+  }
+
+  const getDatePriority = (date: string): number => {
+    if (date === "Just now") return 0
+    if (date.includes("minute")) return 1
+    if (date.includes("hour")) return 2
+    if (date === "Yesterday") return 3
+    return 4 // For dates like "Feb 2, 2023"
+  }
+
+  const filteredAndSortedOrders = useMemo(() => {
+    let filtered = [...orders]
+
+    // Apply search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase()
+      filtered = filtered.filter(
+        (order) =>
+          order.id.toLowerCase().includes(query) ||
+          order.user.name.toLowerCase().includes(query) ||
+          order.project.toLowerCase().includes(query) ||
+          order.address.toLowerCase().includes(query) ||
+          order.status.label.toLowerCase().includes(query)
+      )
+    }
+
+    // Apply status filter
+    if (statusFilter) {
+      filtered = filtered.filter((order) => order.status.label === statusFilter)
+    }
+
+    // Apply sorting
+    if (sortBy) {
+      filtered.sort((a, b) => {
+        let comparison = 0
+        switch (sortBy) {
+          case "id":
+            comparison = a.id.localeCompare(b.id)
+            break
+          case "user":
+            comparison = a.user.name.localeCompare(b.user.name)
+            break
+          case "project":
+            comparison = a.project.localeCompare(b.project)
+            break
+          case "date":
+            comparison = getDatePriority(a.date) - getDatePriority(b.date)
+            break
+          case "status":
+            comparison = a.status.label.localeCompare(b.status.label)
+            break
+        }
+        return sortOrder === "asc" ? comparison : -comparison
+      })
+    }
+
+    return filtered
+  }, [searchQuery, statusFilter, sortBy, sortOrder])
+
+  const statusOptions = ["In Progress", "Complete", "Pending", "Approved", "Rejected"]
 
   return (
     <motion.main
@@ -126,12 +207,61 @@ export default function OrderList() {
             <Button size="sm" variant="ghost" className="p-2">
               <Plus className="w-5 h-5" />
             </Button>
-            <Button size="sm" variant="ghost" className="p-2">
-              <Menu className="w-5 h-5" />
-            </Button>
-            <Button size="sm" variant="ghost" className="p-2">
-              <ArrowUpDown className="w-5 h-5" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="sm" variant="ghost" className="p-2">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem onClick={() => setStatusFilter(null)}>
+                  All Statuses
+                </DropdownMenuItem>
+                {statusOptions.map((status) => (
+                  <DropdownMenuItem
+                    key={status}
+                    onClick={() => setStatusFilter(status)}
+                    className={statusFilter === status ? "bg-muted" : ""}
+                  >
+                    {status}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="sm" variant="ghost" className="p-2">
+                  <ArrowUpDown className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem onClick={() => handleSort("id")}>
+                  Order ID {sortBy === "id" && (sortOrder === "asc" ? "↑" : "↓")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSort("user")}>
+                  User {sortBy === "user" && (sortOrder === "asc" ? "↑" : "↓")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSort("project")}>
+                  Project {sortBy === "project" && (sortOrder === "asc" ? "↑" : "↓")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSort("date")}>
+                  Date {sortBy === "date" && (sortOrder === "asc" ? "↑" : "↓")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSort("status")}>
+                  Status {sortBy === "status" && (sortOrder === "asc" ? "↑" : "↓")}
+                </DropdownMenuItem>
+                {sortBy && (
+                  <>
+                    <DropdownMenuItem className="border-t border-border mt-1 pt-1" onClick={() => {
+                      setSortBy(null)
+                      setSortOrder("asc")
+                    }}>
+                      Clear Sort
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Right side - Search */}
@@ -140,6 +270,8 @@ export default function OrderList() {
             <input
               type="text"
               placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
             />
           </div>
@@ -180,7 +312,7 @@ export default function OrderList() {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order, i) => (
+                {filteredAndSortedOrders.map((order, i) => (
                   <motion.tr
                     key={`${order.id}-${i}`}
                     initial={{ opacity: 0, x: -20 }}
