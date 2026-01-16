@@ -19,13 +19,15 @@ const dashboardItems = [
   { icon: BookOpen, label: "Online Courses" },
 ]
 
-const pageItems = [
-  { icon: Users, label: "User Profile" },
+const userProfileItems = [
   { icon: Home, label: "Overview" },
   { icon: FolderOpen, label: "Projects" },
   { icon: BookOpen, label: "Campaigns" },
   { icon: BookOpen, label: "Documents" },
   { icon: Users, label: "Followers" },
+]
+
+const pageItems = [
   { icon: Settings, label: "Account" },
   { icon: Home, label: "Corporate" },
   { icon: BookOpen, label: "Blog" },
@@ -34,6 +36,7 @@ const pageItems = [
 
 export default function Sidebar({ open }: SidebarProps) {
   const [expandedFavories, setExpandedFavories] = useState(true)
+  const [expandedUserProfile, setExpandedUserProfile] = useState(false)
 
   return (
     <motion.aside
@@ -117,7 +120,43 @@ export default function Sidebar({ open }: SidebarProps) {
               Pages
             </div>
             <motion.div className="space-y-1">
-              {pageItems.slice(0, 6).map((item, i) => (
+              {/* User Profile with dropdown */}
+              <div>
+                <motion.button
+                  onClick={() => setExpandedUserProfile(!expandedUserProfile)}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <Users className="w-4 h-4" />
+                    <span>User Profile</span>
+                  </div>
+                  <motion.div
+                    animate={{ rotate: expandedUserProfile ? 90 : 0 }}
+                    className="text-sidebar-muted-foreground"
+                  >
+                    <ChevronRight className="w-4 h-4 opacity-60" />
+                  </motion.div>
+                </motion.button>
+                <motion.div
+                  animate={{ opacity: expandedUserProfile ? 1 : 0, height: expandedUserProfile ? "auto" : 0 }}
+                  className="overflow-hidden space-y-1 ml-7 mt-1"
+                >
+                  {userProfileItems.map((item, i) => (
+                    <motion.a
+                      key={i}
+                      href="#"
+                      whileHover={{ x: 4 }}
+                      className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
+                    >
+                      <item.icon className="w-4 h-4" />
+                      <span>{item.label}</span>
+                    </motion.a>
+                  ))}
+                </motion.div>
+              </div>
+              
+              {/* Other page items */}
+              {pageItems.map((item, i) => (
                 <motion.a
                   key={i}
                   href="#"
@@ -134,24 +173,6 @@ export default function Sidebar({ open }: SidebarProps) {
             </motion.div>
           </div>
         </nav>
-
-        {/* Bottom section */}
-        <div className="border-t border-sidebar-border p-3 space-y-1">
-          {pageItems.slice(6).map((item, i) => (
-            <motion.a
-              key={i}
-              href="#"
-              whileHover={{ x: 4 }}
-              className="flex items-center justify-between px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <item.icon className="w-4 h-4" />
-                <span>{item.label}</span>
-              </div>
-              <ChevronRight className="w-4 h-4 opacity-60" />
-            </motion.a>
-          ))}
-        </div>
       </div>
     </motion.aside>
   )

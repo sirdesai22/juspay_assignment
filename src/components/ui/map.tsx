@@ -9,16 +9,20 @@ import { cn } from "@/lib/utils"
 interface MapProps extends React.HTMLAttributes<HTMLDivElement> {
   center: LatLngExpression
   zoom?: number
+  minZoom?: number
+  maxZoom?: number
   children?: React.ReactNode
 }
 
 const Map = React.forwardRef<HTMLDivElement, MapProps>(
-  ({ center, zoom = 2, className, children, ...props }, ref) => {
+  ({ center, zoom = 2, minZoom, maxZoom, className, children, ...props }, ref) => {
     return (
       <div ref={ref} className={cn("w-full h-full", className)} {...props}>
         <MapContainer
           center={center}
           zoom={zoom}
+          minZoom={minZoom}
+          maxZoom={maxZoom}
           zoomControl={false}
           className="w-full h-full rounded-lg"
           style={{ height: "100%", width: "100%" }}

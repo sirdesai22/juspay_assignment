@@ -32,7 +32,7 @@ export default function WorldMap() {
     >
       <h3 className="text-lg font-semibold mb-4">Revenue by Location</h3>
       <div className="relative w-full flex-1 min-h-[200px] bg-[oklch(0.95_0.02_250)] rounded-lg overflow-hidden mb-4">
-        <Map center={[20, 0]} zoom={2} className="h-full">
+        <Map center={[20, 0]} zoom={1} className="h-full" minZoom={1} maxZoom={10}>
           <MapTileLayer 
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
