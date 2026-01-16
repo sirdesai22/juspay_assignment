@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { Plus, Filter, ArrowUpDown, Search, FileText, Calendar, MoreVertical } from "lucide-react"
+import { Plus, Menu, ArrowUpDown, Search, FileText, Calendar, MoreVertical } from "lucide-react"
 import { Checkbox } from "./ui/checkbox"
 import { Button } from "./ui/button"
 import {
@@ -112,45 +112,37 @@ export default function OrderList() {
       className="flex-1 overflow-y-auto bg-background"
     >
       <div className="p-6 space-y-6">
-        {/* Title */}
-        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-2xl font-bold">Order List</h1>
+        <motion.div>
+          <h3 className="text-lg font-bold">Orders List</h3>
         </motion.div>
-
-        {/* Action Buttons */}
+        {/* Header Bar */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex items-center gap-3"
+          className="flex items-center justify-between mb-6"
         >
-          <Button size="sm" className="gap-2">
-            <Plus className="w-4 h-4" />
-            Add
-          </Button>
-          <Button size="sm" variant="outline" className="gap-2">
-            <Filter className="w-4 h-4" />
-            Filter
-          </Button>
-          <Button size="sm" variant="outline" className="gap-2">
-            <ArrowUpDown className="w-4 h-4" />
-            Sort
-          </Button>
-        </motion.div>
+          {/* Left side - Action buttons */}
+          <div className="flex items-center gap-3">
+            <Button size="sm" variant="ghost" className="p-2">
+              <Plus className="w-5 h-5" />
+            </Button>
+            <Button size="sm" variant="ghost" className="p-2">
+              <Menu className="w-5 h-5" />
+            </Button>
+            <Button size="sm" variant="ghost" className="p-2">
+              <ArrowUpDown className="w-5 h-5" />
+            </Button>
+          </div>
 
-        {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="relative max-w-md"
-        >
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
-          />
+          {/* Right side - Search */}
+          <div className="relative max-w-xs">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            />
+          </div>
         </motion.div>
 
         {/* Order Table */}
@@ -158,15 +150,14 @@ export default function OrderList() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="rounded-lg shadow-sm overflow-hidden"
-          style={{ backgroundColor: '#f7f9fb' }}
+          className="overflow-hidden"
         >
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-muted/50 border-b border-border">
                 <tr>
                   <th className="text-left py-3 px-4 w-12">
-                    <Checkbox disabled />
+                    <Checkbox disabled className="data-[state=checked]:bg-black data-[state=checked]:border-black data-[state=checked]:text-white" />
                   </th>
                   <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Order ID
@@ -203,6 +194,7 @@ export default function OrderList() {
                       <Checkbox
                         checked={selectedOrders.includes(`${order.id}-${i}`)}
                         onCheckedChange={() => toggleOrderSelection(`${order.id}-${i}`)}
+                        className="data-[state=checked]:bg-black data-[state=checked]:border-black data-[state=checked]:text-white"
                       />
                     </td>
                     <td className="py-3 px-4 text-sm font-medium text-foreground">#{order.id}</td>

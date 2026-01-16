@@ -36,7 +36,7 @@ export default function MainContent() {
       <div className="p-6 space-y-6">
         {/* Title */}
         <motion.div variants={itemVariants}>
-          <h1 className="text-2xl font-bold">eCommerce</h1>
+          <h3 className="text-lg font-bold">eCommerce</h3>
         </motion.div>
 
         {/* Stat Cards and Bar Chart */}
