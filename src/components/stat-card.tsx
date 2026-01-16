@@ -1,4 +1,4 @@
-import { color, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { TrendingUp, TrendingDown } from "lucide-react"
 
 interface StatCardProps {
@@ -6,6 +6,7 @@ interface StatCardProps {
   value: string
   change: string
   trend: "up" | "down"
+  color?: string
 }
 
 export default function StatCard({ title, value, change, trend, color }: StatCardProps) {

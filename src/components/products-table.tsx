@@ -13,7 +13,8 @@ export default function ProductsTable() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-card border border-border rounded-lg p-6 h-full flex flex-col"
+      className="rounded-lg shadow-sm p-6 h-full flex flex-col"
+      style={{ backgroundColor: '#f7f9fb' }}
     >
       <h3 className="text-lg font-semibold mb-4">Top Selling Products</h3>
       <div className="overflow-x-auto flex-1">

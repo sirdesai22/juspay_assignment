@@ -85,7 +85,7 @@ export default function MainContent() {
           className="flex gap-6 flex-col lg:flex-row"
         >
           <div className="flex-1 lg:flex-[2] min-w-0">
-            <div className="bg-card rounded-lg border border-border p-6 h-full flex flex-col">
+            <div className="rounded-lg shadow-sm p-6 h-full flex flex-col" style={{ backgroundColor: '#f7f9fb' }}>
               <div className="flex items-center mb-4">
                 <h3 className="text-lg font-semibold">Revenue</h3>
                 <div className="h-6 w-px bg-border mx-4"></div>

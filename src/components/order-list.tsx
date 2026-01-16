@@ -158,7 +158,8 @@ export default function OrderList() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-card border border-border rounded-lg overflow-hidden"
+          className="rounded-lg shadow-sm overflow-hidden"
+          style={{ backgroundColor: '#f7f9fb' }}
         >
           <div className="overflow-x-auto">
             <table className="w-full">

@@ -17,7 +17,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="flex h-screen bg-background text-foreground overflow-hidden">
+    <div className="flex h-screen bg-white text-foreground overflow-hidden">
       {/* Sidebar */}
       <Sidebar
         open={sidebarOpen}

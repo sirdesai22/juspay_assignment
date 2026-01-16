@@ -19,8 +19,10 @@ export default function Chart() {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="bg-card border border-border rounded-lg p-6"
+      className="rounded-lg shadow-sm p-6"
+      style={{ backgroundColor: '#f7f9fb' }}
     >
+    
       <h3 className="text-lg font-semibold mb-4">Projections vs Actuals</h3>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data} barCategoryGap="25%">
