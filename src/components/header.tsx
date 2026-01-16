@@ -1,4 +1,4 @@
-import { Bell, Moon, Sun, RotateCcw, Book, Grid2X2, Search } from "lucide-react"
+import { Bell, Moon, Sun, RotateCcw, Search, PanelLeft, PanelRight } from "lucide-react"
 import { motion } from "framer-motion"
 
 interface HeaderProps {
@@ -16,7 +16,7 @@ export default function Header({ onNotificationClick, onThemeToggle, theme }: He
     >
       <div className="flex items-center gap-4 flex-1">
         <div className="flex items-center gap-2">
-          <Book className="w-5 h-5" />
+          <PanelLeft className="w-5 h-5" />
           <span className="text-sm text-muted-foreground">Dashboards</span>
           <span className="text-sm">/</span>
           <span className="text-sm font-medium">Default</span>
@@ -67,9 +67,10 @@ export default function Header({ onNotificationClick, onThemeToggle, theme }: He
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={onNotificationClick}
           className="p-2 hover:bg-muted rounded-lg transition-colors"
         >
-          <Grid2X2 className="w-5 h-5" />
+          <PanelRight className="w-5 h-5" />
         </motion.button>
       </div>
     </motion.header>

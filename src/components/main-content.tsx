@@ -44,7 +44,7 @@ export default function MainContent() {
           variants={itemVariants}
           className="flex gap-6 flex-col lg:flex-row w-full"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto lg:flex-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto lg:min-w-[500px] lg:shrink-0">
             <StatCard
               title="Customers"
               value="3,781"
