@@ -127,97 +127,107 @@ export default function MainContent() {
           variants={itemVariants}
           className="grid grid-cols-1 lg:grid-cols-3 gap-6"
         >
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 h-full">
             <ProductsTable />
           </div>
-          <div>
+          <div className="h-full">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-card rounded-lg border border-border p-6"
+              className="bg-card rounded-lg border border-border p-6 h-full flex flex-col"
             >
               <h3 className="text-lg font-semibold mb-4">Total Sales</h3>
-              <div className="relative flex items-center justify-center h-64">
+              <div className="relative flex items-center justify-center flex-1 min-h-[200px] mb-4">
                 <svg
                   width="200"
                   height="200"
                   viewBox="0 0 200 200"
                   className="transform -rotate-90"
                 >
-                  {/* Donut Chart */}
+                  {/* Donut Chart - Full circle with segments (circumference ≈ 502.65) */}
+                  {/* Direct (Dark grey/black) - 38.6% */}
                   <circle
                     cx="100"
                     cy="100"
                     r="80"
                     fill="none"
-                    stroke="hsl(var(--color-chart-1))"
+                    stroke="#4a5568"
                     strokeWidth="25"
-                    strokeDasharray="126 314"
+                    strokeDasharray="194 308.65"
+                    strokeDashoffset="0"
+                    strokeLinecap="round"
                   />
+                  {/* Affiliate (Light green) - 21.2% */}
                   <circle
                     cx="100"
                     cy="100"
                     r="80"
                     fill="none"
-                    stroke="hsl(var(--color-chart-2))"
+                    stroke="#68d391"
                     strokeWidth="25"
-                    strokeDasharray="79 314"
-                    strokeDashoffset="-126"
+                    strokeDasharray="106.5 396.15"
+                    strokeDashoffset="-194"
+                    strokeLinecap="round"
                   />
+                  {/* Sponsored (Light blue) - 24.1% */}
                   <circle
                     cx="100"
                     cy="100"
                     r="80"
                     fill="none"
-                    stroke="hsl(var(--color-chart-4))"
+                    stroke="#63b3ed"
                     strokeWidth="25"
-                    strokeDasharray="50 314"
-                    strokeDashoffset="-205"
+                    strokeDasharray="121.1 381.55"
+                    strokeDashoffset="-300.5"
+                    strokeLinecap="round"
                   />
+                  {/* E-mail (Light purple) - 16.1% */}
                   <circle
                     cx="100"
                     cy="100"
                     r="80"
                     fill="none"
-                    stroke="hsl(var(--color-chart-6))"
+                    stroke="#b794f4"
                     strokeWidth="25"
-                    strokeDasharray="59 314"
-                    strokeDashoffset="-255"
+                    strokeDasharray="81 421.65"
+                    strokeDashoffset="-421.6"
+                    strokeLinecap="round"
                   />
                 </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                  <div className="text-2xl font-bold">38.6%</div>
-                  <div className="text-xs text-muted-foreground">Direct</div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="bg-[#2d5016] text-white px-3 py-1.5 rounded text-sm font-semibold">
+                    38.6%
+                  </div>
                 </div>
               </div>
-              <div className="mt-4 space-y-2 text-sm">
+              <div className="space-y-2.5 text-sm mt-auto">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-chart-1" />
-                    <span>Direct</span>
+                    <div className="w-3 h-3 rounded-full bg-[#4a5568]" />
+                    <span className="text-foreground">Direct</span>
                   </div>
-                  <span className="font-semibold">$300.56</span>
+                  <span className="font-semibold text-foreground">$300.56</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-chart-2" />
-                    <span>Affiliate</span>
+                    <div className="w-3 h-3 rounded-full bg-[#68d391]" />
+                    <span className="text-foreground">Affiliate</span>
                   </div>
-                  <span className="font-semibold">$135.18</span>
+                  <span className="font-semibold text-foreground">$135.18</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-chart-4" />
-                    <span>Sponsored</span>
+                    <div className="w-3 h-3 rounded-full bg-[#63b3ed]" />
+                    <span className="text-foreground">Sponsored</span>
                   </div>
-                  <span className="font-semibold">$154.02</span>
+                  <span className="font-semibold text-foreground">$154.02</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-chart-6" />
-                    <span>E-mail</span>
+                    <div className="w-3 h-3 rounded-full bg-[#b794f4]" />
+                    <span className="text-foreground">E-mail</span>
                   </div>
-                  <span className="font-semibold">$48.96</span>
+                  <span className="font-semibold text-foreground">$48.96</span>
                 </div>
               </div>
             </motion.div>
