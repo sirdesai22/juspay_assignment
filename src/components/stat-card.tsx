@@ -7,9 +7,10 @@ interface StatCardProps {
   change: string
   trend: "up" | "down"
   color?: string
+  isLight?: boolean
 }
 
-export default function StatCard({ title, value, change, trend, color }: StatCardProps) {
+export default function StatCard({ title, value, change, trend, color, isLight = false }: StatCardProps) {
   return (
     <motion.div
       whileHover={{ y: -4 }}
@@ -17,15 +18,15 @@ export default function StatCard({ title, value, change, trend, color }: StatCar
       style={{ backgroundColor: color }}
     >
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="w-full">
-        <p className="text-sm text-black font-semibold mb-2">{title}</p>
+        <p className={`text-sm ${isLight ? "text-black" : "text-white"} font-semibold mb-2`}>{title}</p>
         <div className="flex items-end w-full">
-          <h3 className="text-3xl font-bold text-black flex-1">{value}</h3>
+          <h3 className={`text-3xl font-bold ${isLight ? "text-black" : "text-white"} flex-1`}>{value}</h3>
           <motion.div
             animate={{ y: trend === "up" ? -4 : 4 }}
             className="flex items-center gap-2 sm:gap-3 md:gap-4 ml-6"
           >
-            {trend === "up" ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-            <span className="text-sm font-semibold">{change}</span>
+            {trend === "up" ? <TrendingUp className={`w-4 h-4 ${isLight ? "text-black" : "text-white"}`} /> : <TrendingDown className={`w-4 h-4 ${isLight ? "text-black" : "text-white"}`} />}
+            <span className={`text-sm font-semibold ${isLight ? "text-black" : "text-white"}`}>{change}</span>
           </motion.div>
         </div>
       </motion.div>

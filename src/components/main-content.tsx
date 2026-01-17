@@ -65,6 +65,7 @@ export default function MainContent() {
               change="+11.01%"
               trend="up"
               color="var(--stat-card1)"
+              isLight={true}
             />
             <StatCard
               title="Orders"
@@ -86,6 +87,7 @@ export default function MainContent() {
               change="+6.08%"
               trend="up"
               color="var(--stat-card3)"
+              isLight={true}
             />
           </div>
           <div className="w-full lg:flex-[2] lg:min-w-0 min-h-[250px] lg:min-h-0">
