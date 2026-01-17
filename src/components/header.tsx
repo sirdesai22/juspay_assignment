@@ -1,5 +1,6 @@
 import { Bell, Moon, Sun, RotateCcw, Search, PanelLeft, PanelRight, Star, Menu } from "lucide-react"
 import { motion } from "framer-motion"
+import { useState } from "react"
 
 interface HeaderProps {
   onNotificationClick: () => void
@@ -9,6 +10,7 @@ interface HeaderProps {
 }
 
 export default function Header({ onNotificationClick, onThemeToggle, onSidebarToggle, theme }: HeaderProps) {
+  const [isStarred, setIsStarred] = useState(false)
   return (
     <motion.header
       initial={{ opacity: 0, y: -10 }}
@@ -26,7 +28,7 @@ export default function Header({ onNotificationClick, onThemeToggle, onSidebarTo
           <Menu className="w-5 h-5" />
         </motion.button>
         <div className="flex items-center gap-1 md:gap-2">
-          <Star className="w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
+          <Star fill={isStarred ? "yellow" : "none"} stroke={isStarred ? "goldenrod" : "currentColor"} onClick={() => setIsStarred(!isStarred)} className="w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
           <PanelLeft className="w-4 h-4 md:w-5 md:h-5 hidden md:block" />
           <span className="text-xs md:text-sm text-muted-foreground hidden sm:inline">Dashboards</span>
           <span className="text-xs md:text-sm hidden sm:inline">/</span>

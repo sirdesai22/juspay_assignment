@@ -1,4 +1,4 @@
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Plus, Menu, ArrowUpDown, Search, FileText, Calendar, MoreVertical } from "lucide-react"
 import { Checkbox } from "./ui/checkbox"
 import { Button } from "./ui/button"
@@ -193,7 +193,11 @@ export default function OrderList() {
       className="flex-1 overflow-y-auto bg-background"
     >
       <div className="p-4 md:p-6 space-y-4 md:space-y-6">
-        <motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <h3 className="text-lg font-bold">Orders List</h3>
         </motion.div>
         {/* Header Bar */}
@@ -204,35 +208,53 @@ export default function OrderList() {
         >
           {/* Left side - Action buttons */}
           <div className="flex items-center gap-2 md:gap-3">
-            <Button size="sm" variant="ghost" className="p-2">
-              <Plus className="w-5 h-5" />
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button size="sm" variant="ghost" className="p-2">
+                <Plus className="w-5 h-5" />
+              </Button>
+            </motion.div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="ghost" className="p-2">
-                  <Menu className="w-5 h-5" />
-                </Button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button size="sm" variant="ghost" className="p-2">
+                    <Menu className="w-5 h-5" />
+                  </Button>
+                </motion.div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                <DropdownMenuItem onClick={() => setStatusFilter(null)}>
-                  All Statuses
-                </DropdownMenuItem>
-                {statusOptions.map((status) => (
-                  <DropdownMenuItem
-                    key={status}
-                    onClick={() => setStatusFilter(status)}
-                    className={statusFilter === status ? "bg-muted" : ""}
-                  >
-                    {status}
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <DropdownMenuItem onClick={() => setStatusFilter(null)}>
+                    All Statuses
                   </DropdownMenuItem>
-                ))}
+                  {statusOptions.map((status, index) => (
+                    <motion.div
+                      key={status}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.03 }}
+                    >
+                      <DropdownMenuItem
+                        onClick={() => setStatusFilter(status)}
+                        className={statusFilter === status ? "bg-muted" : ""}
+                      >
+                        {status}
+                      </DropdownMenuItem>
+                    </motion.div>
+                  ))}
+                </motion.div>
               </DropdownMenuContent>
             </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="ghost" className="p-2">
-                  <ArrowUpDown className="w-5 h-5" />
-                </Button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button size="sm" variant="ghost" className="p-2">
+                    <ArrowUpDown className="w-5 h-5" />
+                  </Button>
+                </motion.div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 <DropdownMenuItem onClick={() => handleSort("id")}>
@@ -265,16 +287,39 @@ export default function OrderList() {
           </div>
 
           {/* Right side - Search */}
-          <div className="relative w-full sm:w-auto sm:max-w-xs">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <motion.div
+            className="relative w-full sm:w-auto sm:max-w-xs"
+            whileFocus={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.div
+              animate={{
+                scale: searchQuery ? 1.1 : 1,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none z-10" />
+            </motion.div>
             <input
               type="text"
               placeholder="Search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+              className="w-full pl-10 pr-4 py-2 rounded-lg bg-muted border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring transition-all"
             />
-          </div>
+            <AnimatePresence>
+              {searchQuery && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground pointer-events-none"
+                >
+                  {filteredAndSortedOrders.length} results
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </motion.div>
 
         {/* Order Table */}
@@ -312,96 +357,142 @@ export default function OrderList() {
                 </tr>
               </thead>
               <tbody>
-                {filteredAndSortedOrders.map((order, i) => (
-                  <motion.tr
-                    key={`${order.id}-${i}`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className={`border-b border-border hover:bg-muted/30 transition-colors ${
-                      selectedOrders.includes(`${order.id}-${i}`) ? "bg-muted/50" : ""
-                    }`}
-                  >
-                    <td className="py-3 px-4">
-                      <Checkbox
-                        checked={selectedOrders.includes(`${order.id}-${i}`)}
-                        onCheckedChange={() => toggleOrderSelection(`${order.id}-${i}`)}
-                        className="data-[state=checked]:bg-black data-[state=checked]:border-black data-[state=checked]:text-white"
-                      />
-                    </td>
-                    <td className="py-3 px-4 text-sm font-medium text-foreground">#{order.id}</td>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={order.user.avatar}
-                          alt={order.user.name}
-                          className="w-8 h-8 rounded-full shrink-0 object-cover"
-                        />
-                        <span className="text-sm text-foreground">{order.user.name}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-sm text-foreground">{order.project}</td>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-foreground">{order.address}</span>
-                        {order.hasDocument && <FileText className="w-4 h-4 text-muted-foreground" />}
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-sm text-foreground">{order.date}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${order.status.color}`}></div>
-                        <span className={`text-sm ${order.status.textColor}`}>{order.status.label}</span>
-                        {order.status.label === "Rejected" && i === 4 && (
-                          <button className="ml-auto p-1 hover:bg-muted rounded">
-                            <MoreVertical className="w-4 h-4 text-muted-foreground" />
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </motion.tr>
-                ))}
+                <AnimatePresence mode="popLayout">
+                  {filteredAndSortedOrders.map((order, i) => (
+                    <motion.tr
+                      key={`${order.id}-${i}`}
+                      layout
+                      initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                      transition={{ 
+                        delay: Math.min(i * 0.03, 0.3),
+                        layout: { duration: 0.3 }
+                      }}
+                      whileHover={{ 
+                        scale: 1.01, 
+                        x: 4,
+                        transition: { duration: 0.2 }
+                      }}
+                      className={`border-b border-border transition-colors ${
+                        selectedOrders.includes(`${order.id}-${i}`) ? "bg-muted/50" : ""
+                      }`}
+                    >
+                      <td className="py-3 px-4">
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <Checkbox
+                            checked={selectedOrders.includes(`${order.id}-${i}`)}
+                            onCheckedChange={() => toggleOrderSelection(`${order.id}-${i}`)}
+                            className="data-[state=checked]:bg-black data-[state=checked]:border-black data-[state=checked]:text-white"
+                          />
+                        </motion.div>
+                      </td>
+                      <td className="py-3 px-4 text-sm font-medium text-foreground">#{order.id}</td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <motion.img
+                            src={order.user.avatar}
+                            alt={order.user.name}
+                            className="w-8 h-8 rounded-full shrink-0 object-cover"
+                            whileHover={{ scale: 1.15, rotate: 5 }}
+                            transition={{ type: "spring", stiffness: 400 }}
+                          />
+                          <span className="text-sm text-foreground">{order.user.name}</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4 text-sm text-foreground">{order.project}</td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-foreground">{order.address}</span>
+                          {order.hasDocument && (
+                            <motion.div
+                              whileHover={{ scale: 1.2, rotate: 15 }}
+                              whileTap={{ scale: 0.9 }}
+                            >
+                              <FileText className="w-4 h-4 text-muted-foreground" />
+                            </motion.div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <motion.div
+                            whileHover={{ scale: 1.2, rotate: -15 }}
+                          >
+                            <Calendar className="w-4 h-4 text-muted-foreground" />
+                          </motion.div>
+                          <span className="text-sm text-foreground">{order.date}</span>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <motion.div
+                            className={`w-2 h-2 rounded-full ${order.status.color}`}
+                            initial={false}
+                            animate={{
+                              scale: selectedOrders.includes(`${order.id}-${i}`) ? [1, 1.5, 1] : 1,
+                            }}
+                            transition={{ duration: 0.3 }}
+                          ></motion.div>
+                          <span className={`text-sm ${order.status.textColor}`}>{order.status.label}</span>
+                          {order.status.label === "Rejected" && i === 4 && (
+                            <motion.button
+                              className="ml-auto p-1 hover:bg-muted rounded"
+                              whileHover={{ scale: 1.2, rotate: 90 }}
+                              whileTap={{ scale: 0.9 }}
+                            >
+                              <MoreVertical className="w-4 h-4 text-muted-foreground" />
+                            </motion.button>
+                          )}
+                        </div>
+                      </td>
+                    </motion.tr>
+                  ))}
+                </AnimatePresence>
               </tbody>
             </table>
           </div>
 
           {/* Pagination */}
-          <div className="border-t border-border px-6 py-4 flex">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="border-t border-border px-6 py-4 flex"
+          >
             <div className="ml-auto">
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
-                    <PaginationPrevious href="#" />
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                      <PaginationPrevious href="#" />
+                    </motion.div>
                   </PaginationItem>
+                  {[1, 2, 3, 4, 5].map((page) => (
+                    <PaginationItem key={page}>
+                      <motion.div
+                        whileHover={{ scale: 1.15, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                      >
+                        <PaginationLink href="#" isActive={page === 1}>
+                          {page}
+                        </PaginationLink>
+                      </motion.div>
+                    </PaginationItem>
+                  ))}
                   <PaginationItem>
-                    <PaginationLink href="#" isActive>
-                      1
-                    </PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">2</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">3</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">4</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink href="#">5</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationNext href="#" />
+                    <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                      <PaginationNext href="#" />
+                    </motion.div>
                   </PaginationItem>
                 </PaginationContent>
               </Pagination>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </motion.main>
