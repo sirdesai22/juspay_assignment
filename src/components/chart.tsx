@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { useTheme } from "next-themes"
 
 const data = [
   { month: "Jan", actuals: 15, projections: 5 },
@@ -15,6 +16,10 @@ const formatYAxis = (value: number) => {
 }
 
 export default function Chart() {
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
+  const tickColor = isDark ? "#ffffff" : "#000000"
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -34,6 +39,7 @@ export default function Chart() {
           <XAxis 
             dataKey="month" 
             stroke="hsl(var(--color-muted-foreground))"
+            tick={{ fill: tickColor, fontSize: 12 }}
             tickLine={true}
             axisLine={true}
           />
@@ -42,6 +48,7 @@ export default function Chart() {
             domain={[0, 30]}
             tickFormatter={formatYAxis}
             ticks={[0, 10, 20, 30]}
+            tick={{ fill: tickColor, fontSize: 12 }}
             tickLine={true}
             axisLine={true}
           />

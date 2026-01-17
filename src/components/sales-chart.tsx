@@ -1,4 +1,5 @@
 import { Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts"
+import { useTheme } from "next-themes"
 
 const data = [
   { month: "Jan", currentWeek: 12, previousWeek: 8 },
@@ -19,6 +20,10 @@ interface SalesChartProps {
 }
 
 export default function SalesChart({ currentWeekValue = "$58,211", previousWeekValue = "$68,768" }: SalesChartProps) {
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
+  const tickColor = isDark ? "#ffffff" : "#000000"
+
   // Create data with null values to create a break in the current week line
   const chartData = data.map((item, index) => ({
     ...item,
@@ -40,14 +45,14 @@ export default function SalesChart({ currentWeekValue = "$58,211", previousWeekV
         <XAxis 
           dataKey="month" 
           stroke="hsl(var(--color-muted-foreground))"
-          tick={{ fill: "hsl(var(--color-muted-foreground))", fontSize: 12 }}
+          tick={{ fill: tickColor, fontSize: 12 }}
         />
         <YAxis 
           stroke="hsl(var(--color-muted-foreground))" 
           domain={[0, 30]}
           tickFormatter={formatYAxis}
           ticks={[0, 10, 20, 30]}
-          tick={{ fill: "hsl(var(--color-muted-foreground))", fontSize: 12 }}
+          tick={{ fill: tickColor, fontSize: 12 }}
         />
         <Tooltip
           contentStyle={{
