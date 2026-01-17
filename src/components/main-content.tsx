@@ -37,8 +37,8 @@ export default function MainContent() {
   }
 
   const displayPercentage = hoveredSegment 
-    ? segmentData[hoveredSegment as keyof typeof segmentData]?.percentage || "38.6%"
-    : "38.6%"
+    ? segmentData[hoveredSegment as keyof typeof segmentData]?.percentage || ""
+    : ""
 
   return (
     <motion.main
@@ -64,28 +64,28 @@ export default function MainContent() {
               value="3,781"
               change="+11.01%"
               trend="up"
-              color="#e3f5ff"
+              color="var(--stat-card1)"
             />
             <StatCard
               title="Orders"
               value="1,219"
               change="-0.03%"
               trend="down"
-              color="#f7f9fb"
+              color="var(--stat-card2)"
             />
             <StatCard
               title="Revenue"
               value="$695"
               change="+15.03%"
               trend="up"
-              color="#f7f9fb"
+              color="var(--stat-card2)"
             />
             <StatCard
               title="Growth"
               value="30.1%"
               change="+6.08%"
               trend="up"
-              color="#e5ecf6"
+              color="var(--stat-card3)"
             />
           </div>
           <div className="w-full lg:flex-[2] lg:min-w-0 min-h-[250px] lg:min-h-0">
@@ -99,19 +99,19 @@ export default function MainContent() {
           className="flex gap-6 flex-col lg:flex-row"
         >
           <div className="flex-1 lg:flex-[2] min-w-0">
-            <div className="rounded-lg shadow-sm p-4 md:p-6 h-full flex flex-col" style={{ backgroundColor: '#f7f9fb' }}>
+            <div className="rounded-lg shadow-sm p-4 md:p-6 h-full flex flex-col bg-card">
               <div className="flex flex-col sm:flex-row sm:items-center mb-4 gap-3 sm:gap-0">
                 <h3 className="text-lg font-semibold">Revenue</h3>
                 <div className="h-px w-full sm:h-6 sm:w-px bg-border sm:mx-4 block sm:block"></div>
                 {/* Stats beside title */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 sm:ml-6">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-black rounded-full"></div>
+                    <div className="w-2 h-2 bg-foreground rounded-full"></div>
                     <div className="flex gap-2">
                       <p className="text-sm text-muted-foreground">
                         Current Week
                       </p>
-                      <p className="text-sm font-semibold text-black">
+                      <p className="text-sm font-semibold text-foreground">
                         $58,211
                       </p>
                     </div>
@@ -122,7 +122,7 @@ export default function MainContent() {
                       <p className="text-sm text-muted-foreground">
                         Previous Week
                       </p>
-                      <p className="text-sm font-semibold text-black">
+                      <p className="text-sm font-semibold text-foreground">
                         $68,768
                       </p>
                     </div>
@@ -157,8 +157,7 @@ export default function MainContent() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="rounded-lg shadow-sm p-6 h-full flex flex-col"
-              style={{ backgroundColor: '#f7f9fb' }}
+              className="rounded-lg shadow-sm p-6 h-full flex flex-col bg-card"
             >
               <h3 className="text-lg font-semibold mb-4">Total Sales</h3>
               <div className="relative flex items-center justify-center flex-1 min-h-[200px] mb-4">

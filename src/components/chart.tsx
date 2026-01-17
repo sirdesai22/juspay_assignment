@@ -19,8 +19,7 @@ export default function Chart() {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="rounded-lg shadow-sm p-4 md:p-6"
-      style={{ backgroundColor: '#f7f9fb' }}
+      className="rounded-lg shadow-sm p-4 md:p-6 bg-card"
     >
     
       <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Projections vs Actuals</h3>
@@ -51,7 +50,10 @@ export default function Chart() {
               backgroundColor: "hsl(var(--color-card))",
               border: "1px solid hsl(var(--color-border))",
               borderRadius: "0.5rem",
+              color: "hsl(var(--color-foreground))",
             }}
+            labelStyle={{ color: "hsl(var(--color-foreground))" }}
+            itemStyle={{ color: "hsl(var(--color-foreground))" }}
           />
           <Bar 
             dataKey="actuals" 
@@ -63,7 +65,7 @@ export default function Chart() {
           <Bar 
             dataKey="projections" 
             stackId="a"
-            fill="#cfdfeb" 
+            fill="#a8c5da50" 
             radius={[8, 8, 0, 0]}
             barSize={30}
           />

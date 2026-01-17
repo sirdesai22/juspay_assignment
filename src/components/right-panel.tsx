@@ -58,7 +58,8 @@ export default function RightPanel({ onClose }: RightPanelProps) {
         animate={{ width: panelWidth, opacity: 1 }}
         exit={{ width: 0, opacity: 0 }}
         transition={{ duration: 0.3 }}
-        className="bg-card border-l border-border overflow-hidden flex flex-col fixed md:relative right-0 top-0 bottom-0 z-50 h-full max-w-[280px] md:max-w-none md:w-[320px]"
+        className="border-l border-border overflow-hidden flex flex-col fixed md:relative right-0 top-0 bottom-0 z-50 h-full max-w-[280px] md:max-w-none md:w-[320px]"
+        style={{ backgroundColor: 'var(--right-panel)' }}
       >
       {/* Header */}
       {/* <div className="border-b border-border px-6 py-4">

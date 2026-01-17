@@ -71,7 +71,7 @@ export default function SalesChart({ currentWeekValue = "$58,211", previousWeekV
         <Line
           type="basis"
           dataKey="currentWeekSolid"
-          stroke="#000000"
+          stroke="#C3B1E1"
           strokeWidth={3}
           dot={false}
           strokeDasharray="0 0"
@@ -83,7 +83,7 @@ export default function SalesChart({ currentWeekValue = "$58,211", previousWeekV
         <Line
           type="basis"
           dataKey="currentWeekDashed"
-          stroke="#000000"
+          stroke="#C3B1E1"
           strokeWidth={3}
           dot={false}
           strokeDasharray="5 5"

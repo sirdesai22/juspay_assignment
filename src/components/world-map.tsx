@@ -28,8 +28,7 @@ export default function WorldMap() {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="rounded-lg shadow-sm p-6 h-full flex flex-col"
-      style={{ backgroundColor: '#f7f9fb' }}
+      className="rounded-lg shadow-sm p-6 h-full flex flex-col bg-card"
     >
       <h3 className="text-lg font-semibold mb-4">Revenue by Location</h3>
       <div className="relative w-full flex-1 min-h-[200px] bg-[oklch(0.95_0.02_250)] rounded-lg overflow-hidden mb-4">
