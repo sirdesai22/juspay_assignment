@@ -36,17 +36,31 @@ const pageItems = [
   { icon: Home, label: "Social" },
 ]
 
-export default function Sidebar({ open, onNavigate, activeView = "default" }: SidebarProps) {
+export default function Sidebar({ open, onToggle, onNavigate, activeView = "default" }: SidebarProps) {
   const [expandedFavories, setExpandedFavories] = useState(true)
   const [expandedUserProfile, setExpandedUserProfile] = useState(false)
 
   return (
-    <motion.aside
-      initial={{ width: 0, opacity: 0 }}
-      animate={{ width: open ? 200 : 0, opacity: open ? 1 : 0 }}
-      transition={{ duration: 0.3 }}
-      className="bg-sidebar border-r border-sidebar-border overflow-hidden"
-    >
+    <>
+      {/* Mobile overlay */}
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={onToggle}
+        />
+      )}
+      <motion.aside
+        initial={{ width: 0, opacity: 0 }}
+        animate={{ width: open ? 200 : 0, opacity: open ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className={`bg-sidebar border-r border-sidebar-border overflow-hidden z-50 ${
+          open ? "fixed md:relative" : "fixed md:relative"
+        } h-full max-md:shadow-lg`}
+      >
       <div className="flex flex-col h-full overflow-y-auto">
         {/* Logo */}
         <div className="p-4 border-b border-sidebar-border">
@@ -180,6 +194,7 @@ export default function Sidebar({ open, onNavigate, activeView = "default" }: Si
           </div>
         </nav>
       </div>
-    </motion.aside>
+      </motion.aside>
+    </>
   )
 }

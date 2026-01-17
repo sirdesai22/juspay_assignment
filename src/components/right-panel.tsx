@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { useState, useEffect } from "react"
 import { Bug, UserPlus, Mic } from "lucide-react"
 
 const notifications = [
@@ -29,15 +30,36 @@ interface RightPanelProps {
   onClose?: () => void
 }
 
-export default function RightPanel({ onClose: _onClose }: RightPanelProps) {
+export default function RightPanel({ onClose }: RightPanelProps) {
+  const [panelWidth, setPanelWidth] = useState(320)
+
+  useEffect(() => {
+    const updateWidth = () => {
+      setPanelWidth(window.innerWidth < 768 ? 280 : 320)
+    }
+    updateWidth()
+    window.addEventListener('resize', updateWidth)
+    return () => window.removeEventListener('resize', updateWidth)
+  }, [])
+
   return (
-    <motion.div
-      initial={{ width: 0, opacity: 0 }}
-      animate={{ width: 320, opacity: 1 }}
-      exit={{ width: 0, opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className="bg-card border-l border-border overflow-hidden flex flex-col"
-    >
+    <>
+      {/* Mobile overlay */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="fixed inset-0 bg-black/50 z-40 md:hidden"
+        onClick={onClose}
+      />
+      <motion.div
+        initial={{ width: 0, opacity: 0 }}
+        animate={{ width: panelWidth, opacity: 1 }}
+        exit={{ width: 0, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-card border-l border-border overflow-hidden flex flex-col fixed md:relative right-0 top-0 bottom-0 z-50 h-full max-w-[280px] md:max-w-none md:w-[320px]"
+      >
       {/* Header */}
       {/* <div className="border-b border-border px-6 py-4">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center justify-between">
@@ -141,6 +163,7 @@ export default function RightPanel({ onClose: _onClose }: RightPanelProps) {
           </div>
         </div>
       </div>
-    </motion.div>
+      </motion.div>
+    </>
   )
 }

@@ -1,26 +1,35 @@
-import { Bell, Moon, Sun, RotateCcw, Search, PanelLeft, PanelRight, Star } from "lucide-react"
+import { Bell, Moon, Sun, RotateCcw, Search, PanelLeft, PanelRight, Star, Menu } from "lucide-react"
 import { motion } from "framer-motion"
 
 interface HeaderProps {
   onNotificationClick: () => void
   onThemeToggle: () => void
+  onSidebarToggle?: () => void
   theme?: string
 }
 
-export default function Header({ onNotificationClick, onThemeToggle, theme }: HeaderProps) {
+export default function Header({ onNotificationClick, onThemeToggle, onSidebarToggle, theme }: HeaderProps) {
   return (
     <motion.header
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-card border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 z-10"
+      className="bg-card border-b border-border px-4 md:px-6 py-3 md:py-4 flex items-center justify-between gap-2 sticky top-0 z-10"
     >
-      <div className="flex items-center gap-4 flex-1">
-        <div className="flex items-center gap-2">
-          <Star className="w-5 h-5" />
-          <PanelLeft className="w-5 h-5" />
-          <span className="text-sm text-muted-foreground">Dashboards</span>
-          <span className="text-sm">/</span>
-          <span className="text-sm font-medium">Default</span>
+      <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onSidebarToggle}
+          className="p-2 hover:bg-muted rounded-lg transition-colors md:hidden shrink-0"
+        >
+          <Menu className="w-5 h-5" />
+        </motion.button>
+        <div className="flex items-center gap-1 md:gap-2">
+          <Star className="w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
+          <PanelLeft className="w-4 h-4 md:w-5 md:h-5 hidden md:block" />
+          <span className="text-xs md:text-sm text-muted-foreground hidden sm:inline">Dashboards</span>
+          <span className="text-xs md:text-sm hidden sm:inline">/</span>
+          <span className="text-xs md:text-sm font-medium">Default</span>
         </div>
       </div>
 
@@ -33,7 +42,7 @@ export default function Header({ onNotificationClick, onThemeToggle, theme }: He
         />
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-1 md:gap-3 shrink-0">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

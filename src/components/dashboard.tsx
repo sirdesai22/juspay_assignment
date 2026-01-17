@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useTheme } from "next-themes"
 import Sidebar from "./sidebar"
 import Header from "./header"
@@ -9,6 +9,20 @@ import RightPanel from "./right-panel"
 export default function Dashboard() {
   const { theme, setTheme } = useTheme()
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  
+  useEffect(() => {
+    // Check if we're on mobile initially and close sidebar
+    const checkScreenSize = () => {
+      if (window.innerWidth < 768) {
+        setSidebarOpen(false)
+      } else {
+        setSidebarOpen(true)
+      }
+    }
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const [activeView, setActiveView] = useState<"default" | "ecommerce">("default")
 
@@ -32,6 +46,7 @@ export default function Dashboard() {
         <Header
           onNotificationClick={() => setNotificationsOpen(!notificationsOpen)}
           onThemeToggle={() => setTheme(theme === "dark" ? "light" : "dark")}
+          onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
           theme={theme}
         />
 

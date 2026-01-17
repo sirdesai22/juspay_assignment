@@ -19,12 +19,12 @@ export default function Chart() {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="rounded-lg shadow-sm p-6"
+      className="rounded-lg shadow-sm p-4 md:p-6"
       style={{ backgroundColor: '#f7f9fb' }}
     >
     
-      <h3 className="text-lg font-semibold mb-4">Projections vs Actuals</h3>
-      <ResponsiveContainer width="100%" height={250}>
+      <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Projections vs Actuals</h3>
+      <ResponsiveContainer width="100%" height="100%" minHeight={200}>
         <BarChart data={data} barCategoryGap="25%">
           <CartesianGrid 
             strokeDasharray="3 3" 

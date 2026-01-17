@@ -192,7 +192,7 @@ export default function OrderList() {
       animate={{ opacity: 1 }}
       className="flex-1 overflow-y-auto bg-background"
     >
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         <motion.div>
           <h3 className="text-lg font-bold">Orders List</h3>
         </motion.div>
@@ -200,10 +200,10 @@ export default function OrderList() {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between mb-6"
+          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-0 mb-4 md:mb-6"
         >
           {/* Left side - Action buttons */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <Button size="sm" variant="ghost" className="p-2">
               <Plus className="w-5 h-5" />
             </Button>
@@ -265,7 +265,7 @@ export default function OrderList() {
           </div>
 
           {/* Right side - Search */}
-          <div className="relative max-w-xs">
+          <div className="relative w-full sm:w-auto sm:max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
               type="text"

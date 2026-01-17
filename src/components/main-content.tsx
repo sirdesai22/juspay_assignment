@@ -47,7 +47,7 @@ export default function MainContent() {
       animate="visible"
       className="flex-1 overflow-y-auto bg-background"
     >
-      <div className="p-6 space-y-6">
+      <div className="p-4 md:p-6 space-y-4 md:space-y-6">
         {/* Title */}
         <motion.div variants={itemVariants}>
           <h3 className="text-lg font-bold">eCommerce</h3>
@@ -58,7 +58,7 @@ export default function MainContent() {
           variants={itemVariants}
           className="flex gap-6 flex-col lg:flex-row w-full"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto lg:min-w-[500px] lg:shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 w-full lg:w-auto lg:min-w-[400px] xl:min-w-[500px] lg:shrink-0">
             <StatCard
               title="Customers"
               value="3,781"
@@ -88,7 +88,7 @@ export default function MainContent() {
               color="#e5ecf6"
             />
           </div>
-          <div className="w-full lg:flex-[2] lg:min-w-0">
+          <div className="w-full lg:flex-[2] lg:min-w-0 min-h-[250px] lg:min-h-0">
             <Chart />
           </div>
         </motion.div>
@@ -99,12 +99,12 @@ export default function MainContent() {
           className="flex gap-6 flex-col lg:flex-row"
         >
           <div className="flex-1 lg:flex-[2] min-w-0">
-            <div className="rounded-lg shadow-sm p-6 h-full flex flex-col" style={{ backgroundColor: '#f7f9fb' }}>
-              <div className="flex items-center mb-4">
+            <div className="rounded-lg shadow-sm p-4 md:p-6 h-full flex flex-col" style={{ backgroundColor: '#f7f9fb' }}>
+              <div className="flex flex-col sm:flex-row sm:items-center mb-4 gap-3 sm:gap-0">
                 <h3 className="text-lg font-semibold">Revenue</h3>
-                <div className="h-6 w-px bg-border mx-4"></div>
+                <div className="h-px w-full sm:h-6 sm:w-px bg-border sm:mx-4 block sm:block"></div>
                 {/* Stats beside title */}
-                <div className="flex items-center gap-5 ml-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 sm:ml-6">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-black rounded-full"></div>
                     <div className="flex gap-2">
@@ -130,7 +130,7 @@ export default function MainContent() {
                 </div>
               </div>
 
-              <div className="flex-1 min-h-[300px]">
+              <div className="flex-1 min-h-[250px] md:min-h-[300px]">
                 <SalesChart
                   currentWeekValue="$58,211"
                   previousWeekValue="$68,768"
