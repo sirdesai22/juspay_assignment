@@ -2,7 +2,8 @@
 
 import * as React from "react"
 import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from "react-leaflet"
-import { LatLngExpression } from "leaflet"
+import type { LatLngExpression } from "leaflet"
+import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 import { cn } from "@/lib/utils"
 
@@ -67,7 +68,7 @@ const MapTileLayer = ({
 interface MapMarkerProps {
   position: LatLngExpression
   children?: React.ReactNode
-  icon?: L.Icon
+  icon?: L.Icon | L.DivIcon
 }
 
 const MapMarker = ({ position, children, icon }: MapMarkerProps) => {
@@ -87,7 +88,7 @@ const MapPopup = ({ children }: MapPopupProps) => {
 }
 
 const MapZoomControl = () => {
-  const map = useMap()
+  useMap() // Initialize map context
   return <ZoomControl position="bottomright" />
 }
 
