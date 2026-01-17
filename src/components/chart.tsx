@@ -26,13 +26,25 @@ export default function Chart() {
       <h3 className="text-lg font-semibold mb-4">Projections vs Actuals</h3>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data} barCategoryGap="25%">
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--color-border))" />
-          <XAxis dataKey="month" stroke="hsl(var(--color-muted-foreground))" />
+          <CartesianGrid 
+            strokeDasharray="3 3" 
+            stroke="hsl(var(--color-border))" 
+            vertical={false}
+            horizontal={true}
+          />
+          <XAxis 
+            dataKey="month" 
+            stroke="hsl(var(--color-muted-foreground))"
+            tickLine={true}
+            axisLine={true}
+          />
           <YAxis 
             stroke="hsl(var(--color-muted-foreground))" 
             domain={[0, 30]}
             tickFormatter={formatYAxis}
             ticks={[0, 10, 20, 30]}
+            tickLine={true}
+            axisLine={true}
           />
           <Tooltip
             contentStyle={{
@@ -44,14 +56,14 @@ export default function Chart() {
           <Bar 
             dataKey="actuals" 
             stackId="a"
-            fill="oklch(0.55 0.18 250)" 
+            fill="#a8c5da" 
             radius={[0, 0, 0, 0]}
             barSize={30}
           />
           <Bar 
             dataKey="projections" 
             stackId="a"
-            fill="oklch(0.7 0.14 250)" 
+            fill="#cfdfeb" 
             radius={[8, 8, 0, 0]}
             barSize={30}
           />
