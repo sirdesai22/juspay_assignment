@@ -18,9 +18,9 @@ export default function StatCard({ title, value, change, trend, color, isLight =
       style={{ backgroundColor: color }}
     >
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="w-full">
-        <p className={`text-sm ${isLight ? "text-black" : "text-white"} font-semibold mb-2`}>{title}</p>
+        <p className={`text-sm ${isLight ? "text-black" : "text-foreground"} font-semibold mb-2`}>{title}</p>
         <div className="flex items-end w-full">
-          <h3 className={`text-3xl font-bold ${isLight ? "text-black" : "text-white"} flex-1`}>{value}</h3>
+          <h3 className={`text-3xl font-bold ${isLight ? "text-black" : "text-foreground"} flex-1`}>{value}</h3>
           <motion.div
             animate={{ y: trend === "up" ? -4 : 4 }}
             className="flex items-center gap-2 sm:gap-3 md:gap-4 ml-6"

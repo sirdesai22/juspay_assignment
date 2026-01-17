@@ -73,6 +73,7 @@ export default function MainContent() {
               change="-0.03%"
               trend="down"
               color="var(--stat-card2)"
+              isLight={false}
             />
             <StatCard
               title="Revenue"
@@ -80,6 +81,7 @@ export default function MainContent() {
               change="+15.03%"
               trend="up"
               color="var(--stat-card2)"
+              isLight={false}
             />
             <StatCard
               title="Growth"
