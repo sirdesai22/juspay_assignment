@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import StatCard from "./stat-card";
 import Chart from "./chart";
 import WorldMap from "./world-map";
@@ -26,6 +27,19 @@ const itemVariants = {
 };
 
 export default function MainContent() {
+  const [hoveredSegment, setHoveredSegment] = useState<string | null>(null)
+
+  const segmentData = {
+    Direct: { percentage: "38.6%", color: "#4a5568" },
+    Affiliate: { percentage: "21.2%", color: "#68d391" },
+    Sponsored: { percentage: "24.1%", color: "#63b3ed" },
+    Email: { percentage: "16.1%", color: "#b794f4" },
+  }
+
+  const displayPercentage = hoveredSegment 
+    ? segmentData[hoveredSegment as keyof typeof segmentData]?.percentage || "38.6%"
+    : "38.6%"
+
   return (
     <motion.main
       variants={containerVariants}
@@ -143,7 +157,8 @@ export default function MainContent() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-card rounded-lg border border-border p-6 h-full flex flex-col"
+              className="rounded-lg shadow-sm p-6 h-full flex flex-col"
+              style={{ backgroundColor: '#f7f9fb' }}
             >
               <h3 className="text-lg font-semibold mb-4">Total Sales</h3>
               <div className="relative flex items-center justify-center flex-1 min-h-[200px] mb-4">
@@ -165,6 +180,9 @@ export default function MainContent() {
                     strokeDasharray="194 308.65"
                     strokeDashoffset="0"
                     strokeLinecap="round"
+                    onMouseEnter={() => setHoveredSegment("Direct")}
+                    onMouseLeave={() => setHoveredSegment(null)}
+                    className="cursor-pointer transition-opacity hover:opacity-80"
                   />
                   {/* Affiliate (Light green) - 21.2% */}
                   <circle
@@ -177,6 +195,9 @@ export default function MainContent() {
                     strokeDasharray="106.5 396.15"
                     strokeDashoffset="-194"
                     strokeLinecap="round"
+                    onMouseEnter={() => setHoveredSegment("Affiliate")}
+                    onMouseLeave={() => setHoveredSegment(null)}
+                    className="cursor-pointer transition-opacity hover:opacity-80"
                   />
                   {/* Sponsored (Light blue) - 24.1% */}
                   <circle
@@ -189,6 +210,9 @@ export default function MainContent() {
                     strokeDasharray="121.1 381.55"
                     strokeDashoffset="-300.5"
                     strokeLinecap="round"
+                    onMouseEnter={() => setHoveredSegment("Sponsored")}
+                    onMouseLeave={() => setHoveredSegment(null)}
+                    className="cursor-pointer transition-opacity hover:opacity-80"
                   />
                   {/* E-mail (Light purple) - 16.1% */}
                   <circle
@@ -201,13 +225,18 @@ export default function MainContent() {
                     strokeDasharray="81 421.65"
                     strokeDashoffset="-421.6"
                     strokeLinecap="round"
+                    onMouseEnter={() => setHoveredSegment("Email")}
+                    onMouseLeave={() => setHoveredSegment(null)}
+                    className="cursor-pointer transition-opacity hover:opacity-80"
                   />
                 </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-[#2d5016] text-white px-3 py-1.5 rounded text-sm font-semibold">
-                    38.6%
+                {hoveredSegment && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="bg-[#2d5016] text-white px-3 py-1.5 rounded text-sm font-semibold transition-all">
+                      {displayPercentage}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
               <div className="space-y-2.5 text-sm mt-auto">
                 <div className="flex items-center justify-between">
