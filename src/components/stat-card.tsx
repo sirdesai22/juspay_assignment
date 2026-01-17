@@ -25,8 +25,8 @@ export default function StatCard({ title, value, change, trend, color, isLight =
             animate={{ y: trend === "up" ? -4 : 4 }}
             className="flex items-center gap-2 sm:gap-3 md:gap-4 ml-6"
           >
-            {trend === "up" ? <TrendingUp className={`w-4 h-4 ${isLight ? "text-black" : "text-white"}`} /> : <TrendingDown className={`w-4 h-4 ${isLight ? "text-black" : "text-white"}`} />}
-            <span className={`text-sm font-semibold ${isLight ? "text-black" : "text-white"}`}>{change}</span>
+            {trend === "up" ? <TrendingUp className={`w-4 h-4 ${isLight ? "text-black" : "text-foreground"}`} /> : <TrendingDown className={`w-4 h-4 ${isLight ? "text-black" : "text-foreground"}`} />}
+            <span className={`text-sm font-semibold ${isLight ? "text-black" : "text-foreground"}`}>{change}</span>
           </motion.div>
         </div>
       </motion.div>
